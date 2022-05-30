@@ -44,10 +44,18 @@ module.exports.newUser = async (req, res) => {
 
 module.exports.patchUser = async (req, res) => {
   try {
-  } catch (error) {}
+    await Users.updateOne({ _id: req.params.id }, req.body);
+    res.status(200).send("Usuario modificado");
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 module.exports.deleteUser = async (req, res) => {
   try {
-  } catch (error) {}
+    await Users.deleteOne({ _id: req.params.id });
+    res.json("Usuario eliminado");
+  } catch (error) {
+    res.json(error);
+  }
 };
