@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Back for roulette at the Las vegas project for final project in GeeksHubs Academy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvdsanar/las-vegas-back.git"
+  },
+  "author": "David Sánchez Ariza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvdsanar/las-vegas-back/issues"
+  },
+  "homepage": "https://github.com/dvdsanar/las-vegas-back#readme"
+}
