@@ -59,3 +59,12 @@ module.exports.deleteUser = async (req, res) => {
     res.json(error);
   }
 };
+
+module.exports.addCard = async (req, res) => {
+  try {
+    await Users.updateOne({ _id: req.params.id }, { card: req.body.card });
+    res.status(200).send("You modified your card");
+  } catch (error) {
+    res.json(error);
+  }
+};
