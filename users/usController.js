@@ -3,13 +3,13 @@ const Users = require("./usModel.js");
 module.exports.getUsers = async (req, res) => {
   try {
     if (req.query.name || req.query.email) {
-      const listaFiltrada = await Users.find({
+      const filteredList = await Users.find({
         $or: [{ name: req.query.name }, { email: req.query.email }],
       });
-      res.json(listaFiltrada);
+      res.json(filteredList);
     } else {
-      const lista = await Users.find({});
-      res.json(lista);
+      const list = await Users.find({});
+      res.json(list);
     }
   } catch (error) {
     res.json(error);
