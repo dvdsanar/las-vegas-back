@@ -7,8 +7,11 @@ const Schema = new mongoose.Schema({
     required: true,
   },
   date: Date,
-  bet: String,
-  result: Number,
+  betAmountColour: Number,
+  betAmountParity: Number,
+  betColour: String,
+  betParity: Boolean,
+  result: Object,
 });
 const Model = mongoose.model("Games", Schema);
 module.exports = Model;
