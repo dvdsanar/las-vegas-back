@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const controller = require("./usController.js");
 
-router.get("/", controller.getUsers); //Cualquier rol puede acceder al no tener ningún parametro el middleware
+router.get("/", controller.getUsers);
 router.get("/:id", controller.getUserId);
-router.post("/", controller.newUser); //Solo puede acceder el rol admin
+router.post("/", controller.newUser);
 router.patch("/:id", controller.patchUser);
 router.delete("/:id", controller.deleteUser);
 
