@@ -68,3 +68,16 @@ module.exports.addCard = async (req, res) => {
     res.json(error);
   }
 };
+
+module.exports.addBalance = async (req, res) => {
+  try {
+    const userToAddMoney = await Users.find({ _id: req.params.id });
+    await Users.updateOne(
+      { _id: req.params.id },
+      { balance: userToAddMoney[0].balance + req.body.balance }
+    );
+    res.status(200).send("You add " + req.body.balance + " to your balance");
+  } catch (error) {
+    res.json(error);
+  }
+};

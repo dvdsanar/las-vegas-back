@@ -8,5 +8,6 @@ router.post("/", controller.newUser);
 router.patch("/:id", controller.patchUser);
 router.delete("/:id", controller.deleteUser);
 router.patch("/card/:id", controller.addCard);
+router.patch("/balance/:id", controller.addBalance);
 
 module.exports = router;
