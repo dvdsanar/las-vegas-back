@@ -38,10 +38,10 @@ module.exports.newGame = async (req, res) => {
     const gameToCreate = {
       idUser: req.body.idUser,
       date: d,
-      betAmountColour: req.body.betAmountColour,
-      betAmountParity: req.body.betAmountParity,
-      betColour: req.body.betColour,
-      betParity: req.body.betParity,
+      betAmountColour: req.body.betAmountColour || 0,
+      betAmountParity: req.body.betAmountParity || 0,
+      betColour: req.body.betColour || "green",
+      betParity: req.body.betParity || true,
       result: results[number],
     };
 
@@ -61,24 +61,18 @@ module.exports.newGame = async (req, res) => {
       );
     } else {
       let balanceTotal = player.balance;
-      if (game.result.colour === req.body.betColour) {
-        balanceTotal = balanceTotal + req.body.betAmountColour;
+      if (game.result.colour === game.betColour) {
+        balanceTotal = balanceTotal + game.betAmountColour;
       }
-      if (
-        game.result.colour !== req.body.betColour &&
-        req.body.betColour !== null
-      ) {
-        balanceTotal = balanceTotal - req.body.betAmountColour;
+      if (game.result.colour !== game.betColour) {
+        balanceTotal = balanceTotal - game.betAmountColour;
       }
 
-      if (game.result.parity === req.body.betParity) {
-        balanceTotal = balanceTotal + req.body.betAmountParity;
+      if (game.result.parity === game.betParity) {
+        balanceTotal = balanceTotal + game.betAmountParity;
       }
-      if (
-        game.result.parity !== req.body.betParity &&
-        req.body.betParity !== null
-      ) {
-        balanceTotal = balanceTotal - req.body.betAmountParity;
+      if (game.result.parity !== game.betParity) {
+        balanceTotal = balanceTotal - game.betAmountParity;
       }
       await Users.updateOne(
         { _id: req.body.idUser },
