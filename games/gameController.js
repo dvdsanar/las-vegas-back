@@ -45,43 +45,50 @@ module.exports.newGame = async (req, res) => {
       result: results[number],
     };
 
-    const game = new Games(gameToCreate);
-    await game.save();
+    const totalBet =
+      gameToCreate.betAmountColour + gameToCreate.betAmountParity;
 
-    // Add money to user balance
-    if (game.result.number === 0) {
-      await Users.updateOne(
-        { _id: req.body.idUser },
-        {
-          balance:
-            player.balance -
-            req.body.betAmountColour / 2 -
-            req.body.betAmountParity / 2,
+    if (totalBet <= player.balance) {
+      const game = new Games(gameToCreate);
+      await game.save();
+
+      // Add money to user balance
+      if (game.result.number === 0) {
+        await Users.updateOne(
+          { _id: req.body.idUser },
+          {
+            balance:
+              player.balance -
+              req.body.betAmountColour / 2 -
+              req.body.betAmountParity / 2,
+          }
+        );
+      } else {
+        let balanceTotal = player.balance;
+        if (game.result.colour === game.betColour) {
+          balanceTotal = balanceTotal + game.betAmountColour;
         }
-      );
+        if (game.result.colour !== game.betColour) {
+          balanceTotal = balanceTotal - game.betAmountColour;
+        }
+
+        if (game.result.parity === game.betParity) {
+          balanceTotal = balanceTotal + game.betAmountParity;
+        }
+        if (game.result.parity !== game.betParity) {
+          balanceTotal = balanceTotal - game.betAmountParity;
+        }
+        await Users.updateOne(
+          { _id: req.body.idUser },
+          {
+            balance: balanceTotal,
+          }
+        );
+      }
+      res.json(game);
     } else {
-      let balanceTotal = player.balance;
-      if (game.result.colour === game.betColour) {
-        balanceTotal = balanceTotal + game.betAmountColour;
-      }
-      if (game.result.colour !== game.betColour) {
-        balanceTotal = balanceTotal - game.betAmountColour;
-      }
-
-      if (game.result.parity === game.betParity) {
-        balanceTotal = balanceTotal + game.betAmountParity;
-      }
-      if (game.result.parity !== game.betParity) {
-        balanceTotal = balanceTotal - game.betAmountParity;
-      }
-      await Users.updateOne(
-        { _id: req.body.idUser },
-        {
-          balance: balanceTotal,
-        }
-      );
+      res.send("Sorry but you can't bet this amout, try to add more credit.");
     }
-    res.json(game);
   } catch (error) {
     res.json(error);
   }
