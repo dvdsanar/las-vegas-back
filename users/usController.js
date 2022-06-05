@@ -19,7 +19,7 @@ module.exports.getUsers = async (req, res) => {
 
 module.exports.getUserId = async (req, res) => {
   try {
-    res.json(await Users.find({ _id: req.params.id }));
+    res.json(await Users.findOne({ _id: req.params.id }));
   } catch (error) {
     res.json(error);
   }
@@ -46,7 +46,7 @@ module.exports.newUser = async (req, res) => {
 module.exports.patchUser = async (req, res) => {
   try {
     await Users.updateOne({ _id: req.params.id }, req.body);
-    res.status(200).send("Usuario modificado");
+    res.status(200).send("User modified");
   } catch (error) {
     res.json(error);
   }
@@ -55,7 +55,7 @@ module.exports.patchUser = async (req, res) => {
 module.exports.deleteUser = async (req, res) => {
   try {
     await Users.deleteOne({ _id: req.params.id });
-    res.json("Usuario eliminado");
+    res.json("User eliminated");
   } catch (error) {
     res.json(error);
   }
@@ -72,10 +72,10 @@ module.exports.addCard = async (req, res) => {
 
 module.exports.addBalance = async (req, res) => {
   try {
-    const userToAddMoney = await Users.find({ _id: req.params.id });
+    const userToAddMoney = await Users.findOne({ _id: req.params.id });
     await Users.updateOne(
       { _id: req.params.id },
-      { balance: userToAddMoney[0].balance + req.body.balance }
+      { balance: userToAddMoney.balance + req.body.balance }
     );
     res.status(200).send("You add " + req.body.balance + " to your balance");
   } catch (error) {
