@@ -33,7 +33,7 @@ module.exports.newUser = async (req, res) => {
       password: req.body.password,
       rol: "user",
       card: 0000,
-      balance: 0.0,
+      balance: 5,
     };
     const usuario = new Users(userToCreate);
     await usuario.save();
