@@ -1,4 +1,5 @@
 const Users = require("./usModel.js");
+const jwt = require("jsonwebtoken");
 
 module.exports.getUsers = async (req, res) => {
   try {
@@ -77,6 +78,26 @@ module.exports.addBalance = async (req, res) => {
       { balance: userToAddMoney[0].balance + req.body.balance }
     );
     res.status(200).send("You add " + req.body.balance + " to your balance");
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+module.exports.getToken = async (req, res) => {
+  try {
+    const user = await Users.findOne({
+      email: req.headers.email,
+      password: req.headers.password,
+    });
+    if (user) {
+      const token = jwt.sign(
+        { id: user._id, rol: user.rol },
+        process.env.JWT_KEY
+      );
+      res.json(token);
+    } else {
+      res.status(401).send("Sorry, you have to register to login");
+    }
   } catch (error) {
     res.json(error);
   }
