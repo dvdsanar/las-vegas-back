@@ -41,7 +41,7 @@ module.exports.newGame = async (req, res) => {
       betAmountColour: req.body.betAmountColour || 0,
       betAmountParity: req.body.betAmountParity || 0,
       betColour: req.body.betColour || "green",
-      betParity: req.body.betParity || true,
+      betParity: req.body.betParity || false,
       result: results[number],
     };
 
