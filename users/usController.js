@@ -86,8 +86,8 @@ module.exports.addBalance = async (req, res) => {
 module.exports.getToken = async (req, res) => {
   try {
     const user = await Users.findOne({
-      email: req.headers.email,
-      password: req.headers.password,
+      email: req.body.email,
+      password: req.body.password,
     });
     if (user) {
       const token = jwt.sign(
