@@ -31,7 +31,7 @@ module.exports.newUser = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      rol: "admin",
+      rol: "user",
       card: 0000,
       balance: 5,
     };
