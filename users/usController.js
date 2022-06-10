@@ -3,9 +3,13 @@ const jwt = require("jsonwebtoken");
 
 module.exports.getUsers = async (req, res) => {
   try {
-    if (req.query.name || req.query.email) {
+    if (req.query.name || req.query.email || req.query.id) {
       const filteredList = await Users.find({
-        $or: [{ name: req.query.name }, { email: req.query.email }],
+        $or: [
+          { name: req.query.name },
+          { email: req.query.email },
+          { _id: req.query.id },
+        ],
       });
       res.json(filteredList);
     } else {
