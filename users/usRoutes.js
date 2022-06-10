@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require("./usController.js");
 const verification = require("../config/middleware.js");
 
-router.get("/", verification("admin"), controller.getUsers);
+router.get("/", verification(), controller.getUsers);
 router.get("/:id", verification(), controller.getUserId);
 router.post("/", controller.newUser);
 router.patch("/:id", verification(), controller.patchUser);
