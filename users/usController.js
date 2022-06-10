@@ -94,7 +94,7 @@ module.exports.getToken = async (req, res) => {
         { id: user._id, rol: user.rol },
         process.env.JWT_KEY
       );
-      res.json(token);
+      res.json({ token: token, id: user._id, rol: user.rol });
     } else {
       res.status(401).send("Sorry, you have to register to login");
     }
